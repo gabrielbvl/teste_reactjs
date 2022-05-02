@@ -1,0 +1,56 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background-color: #64098a;
+}
+
+.container_img {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+}
+
+.logo {
+    width: 50%;
+}
+
+.container_button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.acess_button {
+    width: 40%;
+    height: 60px;
+    border-radius: 8px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    color: #64098a;
+    font-weight: 900;
+    font-size: 16px;
+    transition: 1.5s;
+}
+
+.acess_button:hover {
+    background-color: green;
+    cursor: pointer;
+    color: white;
+    font-weight: 900;
+    transition: 0.6s;
+}
+
+@media (min-width: 800px) {
+    .acess_button {
+        max-width: 360px;
+        font-size: 24px;
+        transition: 1.5s;
+    }
+}
