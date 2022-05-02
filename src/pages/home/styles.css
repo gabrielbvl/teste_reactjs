@@ -1,6 +1,114 @@
 .header {
-    width: 90vw;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    width: 100vw;
     height: 40px;
     margin-bottom: 20px;
     background-color: #ef9ea3;
+}
+
+.header p {
+    font-size: 20px;
+}
+
+.back {
+    height: 80%;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.back img {
+    width: 20px;
+}
+
+.center_all {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.listing {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    max-width: 1400px;
+    padding: 20px;
+    overflow-x: scroll;
+}
+
+.list_identifier {
+    width: 90%;
+    min-width: 1350px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding: 10px;
+    gap: 15px;
+    background-color: #9389bd;
+    border: 1px solid #9389bd;
+    font-weight: 900;
+}
+
+.list_identifier img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.null {
+    width: 30px;
+}
+
+.container_div {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list_clients {
+    width: 90%;
+    min-width: 1350px;
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border: 1px solid #9389bd;
+    /* overflow-x: scroll; */
+}
+
+.list_clients img {
+    width: 30px;
+    cursor: pointer;
+}
+
+.name {
+    min-width: 300px;
+    font-size: 16px;
+}
+
+.adress {
+    min-width: 300px;
+    font-size: 16px;
+}
+
+.city {
+    min-width: 150px;
+    font-size: 16px;
+}
+
+.state {
+    min-width: 100px;
+    font-size: 16px;
+}
+
+.cell {
+    min-width: 150px;
+    font-size: 16px;
+}
+
+.email {
+    min-width: 150px;
+    font-size: 16px;
 }

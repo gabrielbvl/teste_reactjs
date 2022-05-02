@@ -1,14 +1,14 @@
 import "./styles.css";
 import { toast } from "react-hot-toast";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../imgs/saibWeb.png";
 
 function LandingPage() {
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const goHome = () => {
-        history.push("/home");
+        navigate("/home");
         toast.success("Bem vindo a lista de clientes!");
     };
 
