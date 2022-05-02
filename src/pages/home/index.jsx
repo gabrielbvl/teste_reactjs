@@ -9,11 +9,14 @@ import Minus from "../../imgs/minus.png";
 import Plus from "../../imgs/plus.png";
 import ModalAdd from "../../components/modalAdd";
 import ModalEdit from "../../components/modalEdit";
+import ModalConfirm from "../../components/modalConfirm";
 
 function Home() {
     const [modalAdd, setModalAdd] = useState(false);
     const [modalEdit, setModalEdit] = useState(false);
+    const [modalConfirm, setModalConfirm] = useState(false);
     const [clients, setClients] = useState([]);
+    const [clientsInfo, setClientsInfo] = useState({});
     const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
@@ -36,6 +39,11 @@ function Home() {
         }
     };
 
+    const openModalConfirm = (item) => {
+        setClientsInfo(item);
+        setModalConfirm(true);
+    };
+
     const removeClient = async (id) => {
         console.log(id);
         ApiSaibWeb.delete(`/cliente/${id}`).then((res) => {
@@ -45,10 +53,17 @@ function Home() {
         });
     };
 
-    // console.log("Clients.data", clients);
+    function closeCard() {
+        setModalConfirm(false);
+    }
 
     const openModalAdd = () => {
         setModalAdd(true);
+    };
+
+    const openModalEdit = (item) => {
+        setClientsInfo(item);
+        setModalEdit(true);
     };
 
     return (
@@ -76,11 +91,15 @@ function Home() {
                                 className="list_clients" /*onClick={() => openModalEdit(item.id)}*/
                             >
                                 <img
-                                    onClick={() => removeClient(item.TECL_ID)}
+                                    onClick={() => openModalConfirm(item)}
                                     src={Minus}
                                     alt="delete client"
                                 />
-                                <img src={Edit} alt="edit client" />
+                                <img
+                                    onClick={() => openModalEdit(item)}
+                                    src={Edit}
+                                    alt="edit client"
+                                />
                                 <span className="name">{item.TECL_NOME}</span>
                                 <span className="adress">{item.TECL_ENDERECO}</span>
                                 <span className="city">{item.TECL_CIDADE}</span>
@@ -93,15 +112,25 @@ function Home() {
                 </div>
             </div>
 
-            {!modalAdd ? (
-                <></>
-            ) : (
+            {modalConfirm && (
+                <ModalConfirm
+                    closeCard={closeCard}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    removeClient={removeClient}
+                    clientsInfo={clientsInfo}
+                />
+            )}
+            {modalAdd && (
                 <ModalAdd setModalAdd={setModalAdd} refresh={refresh} setRefresh={setRefresh} />
             )}
-            {!modalEdit ? (
-                <></>
-            ) : (
-                <ModalEdit setModalEdit={setModalEdit} refresh={refresh} setRefresh={setRefresh} />
+            {modalEdit && (
+                <ModalEdit
+                    setModalEdit={setModalEdit}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    clientsInfo={clientsInfo}
+                />
             )}
         </div>
     );
