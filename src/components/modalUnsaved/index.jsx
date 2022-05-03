@@ -1,11 +1,11 @@
 import "./styles.css";
 
 function ModalUnsaved({ closeCard, refresh, setRefresh, setModalAdd, setModalUnsaved }) {
-    function closeModalUnsaved() {
+    const closeModalUnsaved = () => {
         setModalAdd(false);
         setModalUnsaved(false);
         setRefresh(!refresh);
-    }
+    };
 
     return (
         <div className="container_modal_confirm">

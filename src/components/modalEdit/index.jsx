@@ -50,9 +50,9 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
         setModalEdit(false);
     };
 
-    function closeCard() {
+    const closeCard = () => {
         setModalUnsaved(false);
-    }
+    };
 
     const openCard = () => {
         if (

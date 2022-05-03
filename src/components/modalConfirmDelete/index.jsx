@@ -1,10 +1,10 @@
 import "./styles.css";
 
 function ModalConfirmDelete({ closeCard, removeClient, clientsInfo }) {
-    function removerCard() {
+    const removerCard = () => {
         removeClient(clientsInfo.TECL_ID);
         closeCard();
-    }
+    };
 
     return (
         <div className="container_modal_confirm">
