@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ApiSaibWeb from "../../services";
+import Back from "../../imgs/back.png";
 import "./styles.css";
 
 function InfoClient({}) {
     const params = useParams();
     const [item, setItem] = useState({});
     const [refresh, setRefresh] = useState(false);
+
+    const navigate = useNavigate();
 
     console.log("ID", params.id);
 
@@ -23,6 +26,10 @@ function InfoClient({}) {
         } catch (err) {
             toast.error(err.message);
         }
+    };
+
+    const goBack = () => {
+        navigate("/clientes");
     };
 
     return (
@@ -45,6 +52,7 @@ function InfoClient({}) {
                     <h2>Contato</h2>
                     <h3>Número para contato: {item.TECL_TELEFONE}</h3>
                 </div>
+                <img onClick={goBack} className="back" src={Back} alt="Back" />
             </div>
         </div>
     );

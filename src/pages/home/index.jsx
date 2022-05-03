@@ -106,7 +106,12 @@ function Home() {
             <div className="center_all">
                 <div className="listing">
                     <div className="list_identifier">
-                        <img onClick={openModalAdd} src={Plus} alt="add client" />
+                        <img
+                            className="add_client"
+                            onClick={openModalAdd}
+                            src={Plus}
+                            alt="add client"
+                        />
                         <p className="null"></p>
                         <p className="name">Nome</p>
                         <p className="adress">Endereço</p>
@@ -117,10 +122,7 @@ function Home() {
                     </div>
                     <div className="container_div">
                         {clients.map((item) => (
-                            <div
-                                key={item.TECL_ID}
-                                className="list_clients" /*onClick={() => openModalEdit(item.id)}*/
-                            >
+                            <div key={item.TECL_ID} className="list_clients">
                                 <img
                                     onClick={() => openModalConfirm(item)}
                                     src={Minus}
