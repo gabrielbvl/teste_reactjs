@@ -7,7 +7,7 @@ function ModalConfirm({ closeCard, removeClient, clientsInfo }) {
     }
 
     return (
-        <div className="container">
+        <div className="container_modal_confirm">
             <div className="container_buttons">
                 <div className="popUp">
                     <h3> Remover Cliente? </h3>

@@ -16,6 +16,7 @@ function Home() {
     const [modalEdit, setModalEdit] = useState(false);
     const [modalConfirm, setModalConfirm] = useState(false);
     const [clients, setClients] = useState([]);
+    const [newClients, setNewClients] = useState([]);
     const [clientsInfo, setClientsInfo] = useState({});
     const [refresh, setRefresh] = useState(false);
 
@@ -34,6 +35,7 @@ function Home() {
         try {
             const res = await ApiSaibWeb.get(`/clientes`);
             setClients(res.data.data);
+            setNewClients(res.data.data);
         } catch (err) {
             toast.error(err.message);
         }
@@ -66,11 +68,35 @@ function Home() {
         setModalEdit(true);
     };
 
+    const showClients = (name) => {
+        let clientFiltered = newClients.filter(
+            (client) =>
+                client.TECL_NOME.toLowerCase().includes(name.toLowerCase()) ||
+                client.TECL_ENDERECO.toLowerCase().includes(name.toLowerCase()) ||
+                client.TECL_CIDADE.toLowerCase().includes(name.toLowerCase()) ||
+                client.TECL_UF.toLowerCase().includes(name.toLowerCase())
+        );
+        setClients([...clientFiltered]);
+    };
+
     return (
         <div className="container_div">
             <div className="header">
-                <img onClick={goBack} className="back" src={Back} alt="Back" />
-                <p>Teste ReactJS - SaibWeb</p>
+                <div className="left_header">
+                    <img onClick={goBack} className="back" src={Back} alt="Back" />
+                    <p>Teste ReactJS - SaibWeb</p>
+                </div>
+
+                <div className="rigth_header">
+                    <input
+                        className="input_header"
+                        type="text"
+                        placeholder="Pesquisar Cliente"
+                        onChange={(e) => {
+                            showClients(e.target.value);
+                        }}
+                    />
+                </div>
             </div>
             <div className="center_all">
                 <div className="listing">

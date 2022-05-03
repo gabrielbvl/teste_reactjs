@@ -1,6 +1,7 @@
 .header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
     padding: 5px;
     width: 100vw;
@@ -11,6 +12,35 @@
 
 .header p {
     font-size: 20px;
+}
+
+.left_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.rigth_header {
+    width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+}
+
+.input_header {
+    width: 50%;
+    height: 24px;
+    padding-left: 8px;
+    border: none;
+    border: solid 2px transparent;
+    border-radius: 4px;
+    color: black;
+    font-size: 18px;
+}
+
+.input_header:focus {
+    border: solid 2px white;
 }
 
 .back {
@@ -77,7 +107,6 @@
     gap: 15px;
     padding: 10px;
     border: 1px solid #9389bd;
-    /* overflow-x: scroll; */
 }
 
 .list_clients img {
@@ -113,4 +142,34 @@
 .email {
     min-width: 150px;
     font-size: 16px;
+}
+
+@media (max-width: 640px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 80px;
+    }
+    .header p {
+        margin: 0;
+    }
+    .back {
+        height: 100%;
+        margin: 0;
+    }
+    .left_header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .rigth_header {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
 }
