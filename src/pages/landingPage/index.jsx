@@ -8,7 +8,7 @@ function LandingPage() {
     const navigate = useNavigate();
 
     const goHome = () => {
-        navigate("/home");
+        navigate("/clientes");
         toast.success("Bem vindo a lista de clientes!");
     };
 

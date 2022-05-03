@@ -31,6 +31,10 @@ function Home() {
         toast.success("Bem vindo a SaibWeb Tecnologia!");
     };
 
+    const openPageClient = (id) => {
+        navigate(`/clientes/${id}`);
+    };
+
     const getClients = async () => {
         try {
             const res = await ApiSaibWeb.get(`/clientes`);
@@ -55,9 +59,9 @@ function Home() {
         });
     };
 
-    function closeCard() {
+    const closeCard = () => {
         setModalConfirm(false);
-    }
+    };
 
     const openModalAdd = () => {
         setModalAdd(true);
@@ -127,7 +131,9 @@ function Home() {
                                     src={Edit}
                                     alt="edit client"
                                 />
-                                <span className="name">{item.TECL_NOME}</span>
+                                <span onClick={() => openPageClient(item.TECL_ID)} className="name">
+                                    {item.TECL_NOME}
+                                </span>
                                 <span className="adress">{item.TECL_ENDERECO}</span>
                                 <span className="city">{item.TECL_CIDADE}</span>
                                 <span className="state">{item.TECL_UF}</span>
