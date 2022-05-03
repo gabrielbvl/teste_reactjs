@@ -9,7 +9,7 @@ import Minus from "../../imgs/minus.png";
 import Plus from "../../imgs/plus.png";
 import ModalAdd from "../../components/modalAdd";
 import ModalEdit from "../../components/modalEdit";
-import ModalConfirm from "../../components/modalConfirm";
+import ModalConfirmDelete from "../../components/modalConfirmDelete";
 
 function Home() {
     const [modalAdd, setModalAdd] = useState(false);
@@ -74,7 +74,8 @@ function Home() {
                 client.TECL_NOME.toLowerCase().includes(name.toLowerCase()) ||
                 client.TECL_ENDERECO.toLowerCase().includes(name.toLowerCase()) ||
                 client.TECL_CIDADE.toLowerCase().includes(name.toLowerCase()) ||
-                client.TECL_UF.toLowerCase().includes(name.toLowerCase())
+                client.TECL_UF.toLowerCase().includes(name.toLowerCase()) ||
+                client.TECL_TELEFONE.toLowerCase().includes(name.toLowerCase())
         );
         setClients([...clientFiltered]);
     };
@@ -139,7 +140,7 @@ function Home() {
             </div>
 
             {modalConfirm && (
-                <ModalConfirm
+                <ModalConfirmDelete
                     closeCard={closeCard}
                     refresh={refresh}
                     setRefresh={setRefresh}

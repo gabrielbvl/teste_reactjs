@@ -62,7 +62,6 @@
 .listing {
     display: flex;
     flex-direction: column;
-    width: 90vw;
     max-width: 1400px;
     padding: 20px;
     overflow-x: scroll;
@@ -144,7 +143,7 @@
     font-size: 16px;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
     .header {
         display: flex;
         flex-direction: column;

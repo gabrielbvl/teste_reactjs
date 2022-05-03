@@ -5,15 +5,27 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ApiSaibWeb from "../../services";
 import { toast } from "react-hot-toast";
 import Back from "../../imgs/back.png";
-import React from "react";
+import React, { useState } from "react";
+import ModalUnsaved from "../modalUnsaved";
 
 function ModalAdd({ setModalAdd, setRefresh, refresh }) {
+    const [modalUnsaved, setModalUnsaved] = useState(false);
+    const [name, setName] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [cell, setCell] = useState("");
+
     const schema = yup.object().shape({
-        TECL_NOME: yup.string().required("*"),
-        TECL_ENDERECO: yup.string().required("*"),
-        TECL_CIDADE: yup.string().required("*"),
-        TECL_UF: yup.string().required("*"),
-        TECL_TELEFONE: yup.string().required("*"),
+        TECL_NOME: yup.string().required("Campo Obrigatório"),
+        TECL_ENDERECO: yup.string().required("Campo Obrigatório"),
+        TECL_CIDADE: yup.string().required("Campo Obrigatório"),
+        TECL_UF: yup
+            .string()
+            .required("Campo Obrigatório")
+            .min(2, "Mínimo 2 letras")
+            .max(2, "Máximo 2 letras"),
+        TECL_TELEFONE: yup.string().required("Campo Obrigatório"),
     });
     const {
         register,
@@ -28,8 +40,6 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
             return toast.error("Preencha todos os campos");
         }
 
-        console.log("data:", dataForm);
-
         ApiSaibWeb.post("/cliente", dataForm)
             .then((res) => {
                 setRefresh(!refresh);
@@ -42,10 +52,23 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
     const goBack = () => {
         setModalAdd(false);
     };
+
+    const closeCard = () => {
+        setModalUnsaved(false);
+    };
+
+    const openCard = () => {
+        console.log(name, address, city, state, cell);
+        if (name !== "" || address !== "" || city !== "" || state !== "" || cell !== "") {
+            setModalUnsaved(true);
+        } else {
+            setModalAdd(false);
+        }
+    };
     return (
         <section className="container_modal_add">
             <div className="header_modal_add">
-                <img onClick={goBack} className="back" src={Back} alt="Back" />
+                <img onClick={openCard} className="back" src={Back} alt="Back" />
                 <h3>Novo Registro</h3>
             </div>
             <div className="general_modal_add">
@@ -57,7 +80,11 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                             <input
                                 className="input_modal_add"
                                 error={errors.TECL_NOME?.message}
-                                {...register("TECL_NOME")}
+                                {...register("TECL_NOME", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_NOME && (
                                 <p className="error">{errors.TECL_NOME.message}</p>
@@ -68,9 +95,14 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                         <div className="line_one_div">
                             <p className="p_modal_add">Endereço</p>
                             <input
+                                onChange={(e) => setAddress(e.target.value)}
                                 className="input_modal_add"
                                 error={errors.TECL_ENDERECO?.message}
-                                {...register("TECL_ENDERECO")}
+                                {...register("TECL_ENDERECO", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_ENDERECO && (
                                 <p className="error">{errors.TECL_ENDERECO.message}</p>
@@ -83,9 +115,14 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                         <div className="line_two_div">
                             <p className="p_modal_add">Cidade</p>
                             <input
+                                onChange={(e) => setCity(e.target.value)}
                                 className="input_modal_add"
                                 error={errors.TECL_CIDADE?.message}
-                                {...register("TECL_CIDADE")}
+                                {...register("TECL_CIDADE", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_CIDADE && (
                                 <p className="error">{errors.TECL_CIDADE.message}</p>
@@ -95,36 +132,16 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                         {/* UF */}
                         <div className="line_two_div_uf">
                             <p className="p_modal_add">UF</p>
-                            <select className="select_uf" {...register("TECL_UF")}>
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <option value="AP">Amapá</option>
-                                <option value="AM">Amazonas</option>
-                                <option value="BA">Bahia</option>
-                                <option value="CE">Ceará</option>
-                                <option value="DF">Distrito Federal</option>
-                                <option value="ES">Espírito Santo</option>
-                                <option value="GO">Goiás</option>
-                                <option value="MA">Maranhão</option>
-                                <option value="MT">Mato Grosso</option>
-                                <option value="MS">Mato Grosso do Sul</option>
-                                <option value="MG">Minas Gerais</option>
-                                <option value="PA">Pará</option>
-                                <option value="PB">Paraíba</option>
-                                <option value="PR">Paraná</option>
-                                <option value="PE">Pernambuco</option>
-                                <option value="PI">Piauí</option>
-                                <option value="RJ">Rio de Janeiro</option>
-                                <option value="RN">Rio Grande do Norte</option>
-                                <option value="RS">Rio Grande do Sul</option>
-                                <option value="RO">Rondônia</option>
-                                <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
-                                <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
-                                <option value="EX">Estrangeiro</option>
-                            </select>
+                            <input
+                                onChange={(e) => setState(e.target.value)}
+                                className="input_modal_add"
+                                error={errors.TECL_UF?.message}
+                                {...register("TECL_UF", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
+                            />
                             {errors.TECL_UF && <p className="error">{errors.TECL_UF.message}</p>}
                         </div>
 
@@ -132,9 +149,14 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                         <div className="line_two_div">
                             <p className="p_modal_add">Telefone</p>
                             <input
+                                onChange={(e) => setCell(e.target.value)}
                                 className="input_modal_add"
                                 error={errors.TECL_TELEFONE?.message}
-                                {...register("TECL_TELEFONE")}
+                                {...register("TECL_TELEFONE", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_TELEFONE && (
                                 <p className="error">{errors.TECL_TELEFONE.message}</p>
@@ -152,6 +174,16 @@ function ModalAdd({ setModalAdd, setRefresh, refresh }) {
                     </div>
                 </form>
             </div>
+
+            {modalUnsaved && (
+                <ModalUnsaved
+                    closeCard={closeCard}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    setModalAdd={setModalAdd}
+                    setModalUnsaved={setModalUnsaved}
+                />
+            )}
         </section>
     );
 }

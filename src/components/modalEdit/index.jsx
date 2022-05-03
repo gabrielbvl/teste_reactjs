@@ -5,14 +5,27 @@ import { useForm } from "react-hook-form";
 import ApiSaibWeb from "../../services";
 import Back from "../../imgs/back.png";
 import { toast } from "react-hot-toast";
+import { useState } from "react";
+import ModalUnsaved from "../modalUnsaved";
 
 function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
+    const [modalUnsaved, setModalUnsaved] = useState(false);
+    const [name, setName] = useState(clientsInfo.TECL_NOME);
+    const [address, setAddress] = useState(clientsInfo.TECL_ENDERECO);
+    const [city, setCity] = useState(clientsInfo.TECL_CIDADE);
+    const [state, setState] = useState(clientsInfo.TECL_UF);
+    const [cell, setCell] = useState(clientsInfo.TECL_TELEFONE);
+
     const schema = yup.object().shape({
-        TECL_NOME: yup.string().required("*"),
-        TECL_ENDERECO: yup.string().required("*"),
-        TECL_CIDADE: yup.string().required("*"),
-        TECL_UF: yup.string().required("*"),
-        TECL_TELEFONE: yup.string().required("*"),
+        TECL_NOME: yup.string().required("Campo Obrigatório"),
+        TECL_ENDERECO: yup.string().required("Campo Obrigatório"),
+        TECL_CIDADE: yup.string().required("Campo Obrigatório"),
+        TECL_UF: yup
+            .string()
+            .min(2, "Mínimo 2 letras")
+            .max(2, "Máximo 2 letras")
+            .required("Campo Obrigatório"),
+        TECL_TELEFONE: yup.string().required("Campo Obrigatório"),
     });
     const {
         register,
@@ -36,23 +49,45 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
     const goBack = () => {
         setModalEdit(false);
     };
+
+    function closeCard() {
+        setModalUnsaved(false);
+    }
+
+    const openCard = () => {
+        if (
+            name !== clientsInfo.TECL_NOME ||
+            address !== clientsInfo.TECL_ENDERECO ||
+            city !== clientsInfo.TECL_CIDADE ||
+            state !== clientsInfo.TECL_UF ||
+            cell !== clientsInfo.TECL_TELEFONE
+        ) {
+            setModalUnsaved(true);
+        } else {
+            setModalEdit(false);
+        }
+    };
     return (
-        <section className="container_modal_add">
-            <div className="header_modal_add">
-                <img onClick={goBack} className="back" src={Back} alt="Back" />
+        <section className="container_modal_edit">
+            <div className="header_modal_edit">
+                <img onClick={openCard} className="back" src={Back} alt="Back" />
                 <h3>Editar Cliente</h3>
             </div>
-            <div className="general_modal_add">
-                <form className="form_modal_add" onSubmit={handleSubmit(onSubmit)}>
+            <div className="general_modal_edit">
+                <form className="form_modal_edit" onSubmit={handleSubmit(onSubmit)}>
                     <div className="line_one">
                         {/* Nome */}
                         <div className="line_one_div">
-                            <p className="p_modal_add">Nome</p>
+                            <p className="p_modal_edit">Nome</p>
                             <input
                                 defaultValue={clientsInfo.TECL_NOME}
-                                className="input_modal_add"
+                                className="input_modal_edit"
                                 error={errors.TECL_NOME?.message}
-                                {...register("TECL_NOME")}
+                                {...register("TECL_NOME", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_NOME && (
                                 <p className="error">{errors.TECL_NOME.message}</p>
@@ -61,12 +96,16 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
 
                         {/* Endereço */}
                         <div className="line_one_div">
-                            <p className="p_modal_add">Endereço</p>
+                            <p className="p_modal_edit">Endereço</p>
                             <input
                                 defaultValue={clientsInfo.TECL_ENDERECO}
-                                className="input_modal_add"
+                                className="input_modal_edit"
                                 error={errors.TECL_ENDERECO?.message}
-                                {...register("TECL_ENDERECO")}
+                                {...register("TECL_ENDERECO", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_ENDERECO && (
                                 <p className="error">{errors.TECL_ENDERECO.message}</p>
@@ -77,12 +116,16 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
                     <div className="line_two">
                         {/* Cidade */}
                         <div className="line_two_div">
-                            <p className="p_modal_add">Cidade</p>
+                            <p className="p_modal_edit">Cidade</p>
                             <input
                                 defaultValue={clientsInfo.TECL_CIDADE}
-                                className="input_modal_add"
+                                className="input_modal_edit"
                                 error={errors.TECL_CIDADE?.message}
-                                {...register("TECL_CIDADE")}
+                                {...register("TECL_CIDADE", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_CIDADE && (
                                 <p className="error">{errors.TECL_CIDADE.message}</p>
@@ -91,52 +134,32 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
 
                         {/* UF */}
                         <div className="line_two_div_uf">
-                            <p className="p_modal_add">UF</p>
-                            <select
-                                className="select_uf"
+                            <p className="p_modal_edit">UF</p>
+                            <input
                                 defaultValue={clientsInfo.TECL_UF}
-                                {...register("TECL_UF")}
-                            >
-                                <option value="AC">Acre</option>
-                                <option value="AL">Alagoas</option>
-                                <option value="AP">Amapá</option>
-                                <option value="AM">Amazonas</option>
-                                <option value="BA">Bahia</option>
-                                <option value="CE">Ceará</option>
-                                <option value="DF">Distrito Federal</option>
-                                <option value="ES">Espírito Santo</option>
-                                <option value="GO">Goiás</option>
-                                <option value="MA">Maranhão</option>
-                                <option value="MT">Mato Grosso</option>
-                                <option value="MS">Mato Grosso do Sul</option>
-                                <option value="MG">Minas Gerais</option>
-                                <option value="PA">Pará</option>
-                                <option value="PB">Paraíba</option>
-                                <option value="PR">Paraná</option>
-                                <option value="PE">Pernambuco</option>
-                                <option value="PI">Piauí</option>
-                                <option value="RJ">Rio de Janeiro</option>
-                                <option value="RN">Rio Grande do Norte</option>
-                                <option value="RS">Rio Grande do Sul</option>
-                                <option value="RO">Rondônia</option>
-                                <option value="RR">Roraima</option>
-                                <option value="SC">Santa Catarina</option>
-                                <option value="SP">São Paulo</option>
-                                <option value="SE">Sergipe</option>
-                                <option value="TO">Tocantins</option>
-                                <option value="EX">Estrangeiro</option>
-                            </select>
+                                className="input_modal_edit"
+                                error={errors.TECL_UF?.message}
+                                {...register("TECL_UF", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
+                            />
                             {errors.TECL_UF && <p className="error">{errors.TECL_UF.message}</p>}
                         </div>
 
                         {/* Telefone */}
                         <div className="line_two_div">
-                            <p className="p_modal_add">Telefone</p>
+                            <p className="p_modal_edit">Telefone</p>
                             <input
                                 defaultValue={clientsInfo.TECL_TELEFONE}
-                                className="input_modal_add"
+                                className="input_modal_edit"
                                 error={errors.TECL_TELEFONE?.message}
-                                {...register("TECL_TELEFONE")}
+                                {...register("TECL_TELEFONE", {
+                                    onChange: (e) => {
+                                        setName(e.target.value);
+                                    },
+                                })}
                             />
                             {errors.TECL_TELEFONE && (
                                 <p className="error">{errors.TECL_TELEFONE.message}</p>
@@ -144,16 +167,26 @@ function ModalEdit({ setModalEdit, clientsInfo, setRefresh, refresh }) {
                         </div>
                     </div>
 
-                    <div className="buttons_modal_add">
-                        <button className="add_modal_add" id="save">
+                    <div className="buttons_modal_edit">
+                        <button className="edit_modal_edit" id="save">
                             Salvar
                         </button>
-                        <button className="add_modal_add" id="close" onClick={goBack}>
+                        <button className="edit_modal_edit" id="close" onClick={goBack}>
                             Cancelar
                         </button>
                     </div>
                 </form>
             </div>
+
+            {modalUnsaved && (
+                <ModalUnsaved
+                    closeCard={closeCard}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                    setModalAdd={setModalEdit}
+                    setModalUnsaved={setModalUnsaved}
+                />
+            )}
         </section>
     );
 }
