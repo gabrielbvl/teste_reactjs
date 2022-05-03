@@ -2,7 +2,7 @@
 
 ### Deploy do projeto feito no vercel, link:
 
--
+-   https://teste-reactjs-2melr5n6j-gabrielbvlk.vercel.app/
 
 ## Funcionalidades do projeto
 
